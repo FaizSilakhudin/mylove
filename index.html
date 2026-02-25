@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+background:#000;
+overflow-x:hidden;
+color:white;
+}
+
+/* ================= WALLPAPER MOSAIC ================= */
+.wallpaper{
+position:fixed;
+top:0;
+left:0;
+width:110%;
+height:110%;
+display:grid;
+grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
+grid-auto-rows:120px;
+z-index:-3;
+animation:scrollBg 60s linear infinite;
+transition:0.2s;
+}
+
+@keyframes scrollBg{
+0%{transform:translateY(0);}
+100%{transform:translateY(-300px);}
+}
+
+.wallpaper img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.overlay{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.25);
+z-index:-2;
+}
+
+/* ================= MAIN ================= */
+.main{
+padding:40px 20px;
+text-align:center;
+}
+
+.nama{
+font-size:42px;
+font-weight:800;
+text-shadow:0 0 30px hotpink;
+margin-bottom:30px;
+}
+
+.glass{
+background:rgba(0,0,0,0.55);
+border-radius:30px;
+padding:30px;
+box-shadow:0 0 40px hotpink;
+max-width:1100px;
+margin:auto;
+}
+
+/* FOTO GRID */
+.foto-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.foto-container img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 0 20px hotpink;
+transition:0.4s;
+cursor:pointer;
+}
+
+.foto-container img:hover{
+transform:scale(1.07);
+}
+
+/* VIDEO */
+.video-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+video{
+width:100%;
+border-radius:20px;
+box-shadow:0 0 30px hotpink;
+}
+
+/* BUTTON */
+button{
+padding:14px 30px;
+border:none;
+border-radius:40px;
+background:linear-gradient(45deg,#ff69b4,#ff1493);
+color:white;
+font-weight:bold;
+cursor:pointer;
+margin-top:30px;
+transition:0.3s;
+box-shadow:0 0 25px hotpink;
+}
+
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 50px hotpink;
+}
+
+/* POPUP FOTO */
+.popup{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.popup img{
+max-width:90%;
+max-height:90%;
+border-radius:20px;
+box-shadow:0 0 50px hotpink;
+}
+
+/* CONFETTI */
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+top:-10px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(110vh) rotate(720deg);}
+}
+
+/* ================= LOVE MODAL ================= */
+.loveBox{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.92);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:2000;
+}
+
+.loveContent{
+background:rgba(255,105,180,0.12);
+padding:50px;
+border-radius:30px;
+text-align:center;
+max-width:650px;
+box-shadow:0 0 60px hotpink;
+}
+
+#loveText{
+margin-top:30px;
+min-height:120px;
+font-size:24px;
+font-weight:600;
+line-height:1.8;
+opacity:0;
+transform:translateY(20px);
+transition:all 0.8s ease;
+text-shadow:0 0 20px hotpink;
+}
+
+.showText{
+opacity:1 !important;
+transform:translateY(0) !important;
+}
+
+.giftSection{
+margin-top:30px;
+display:none;
+}
+
+.giftIcon{
+font-size:80px;
+cursor:pointer;
+animation:bounce 1s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+</style>
+</head>
+
+<body>
+
+  <!-- PASSWORD SCREEN -->
+<div id="passwordScreen" style="
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:5000;
+">
+
+<h2 style="color:hotpink;margin-bottom:20px;text-shadow:0 0 20px hotpink;">
+Masukin Sandi Dulu Ya ❤️
+</h2>
+
+<input type="password" id="passwordInput" placeholder="Masukkan sandi..."
+style="padding:12px 20px;border-radius:30px;border:none;
+outline:none;text-align:center;margin-bottom:15px;">
+
+<button onclick="checkPassword()">Masuk 💖</button>
+
+<p id="errorText" style="color:red;margin-top:10px;"></p>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+<source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+<div class="wallpaper" id="wallpaper"></div>
+<div class="overlay"></div>
+
+<div class="main">
+<h1 class="nama">TO DINFI SYAFA'ATI ❤️</h1>
+
+<div class="glass">
+
+<h2>Ingat nggk kita pernah sebahagia ini.?💖</h2>
+
+<div class="foto-container">
+<script>
+for(let i=1;i<=10;i++){
+document.write(`<img src="foto/${i}.jpg" onclick="openPopup(this.src)">`);
+}
+</script>
+</div>
+
+<h2 style="margin-top:40px;">Cerita Kita 🎬</h2>
+
+<div class="video-container">
+<script>
+for(let i=1;i<=5;i++){
+document.write(`<video controls><source src="video/${i}.mp4" type="video/mp4"></video>`);
+}
+</script>
+</div>
+
+<button onclick="showLove()">
+💖 Klik ini Kalau Dede Sayang Mas
+</button>
+
+</div>
+</div>
+
+<!-- POPUP FOTO -->
+<div class="popup" id="popup" onclick="this.style.display='none'">
+<img id="popupImg">
+</div>
+
+<!-- LOVE MESSAGE -->
+<div class="loveBox" id="loveBox">
+<div class="loveContent">
+<h2>For dede dinfi ❤️</h2>
+<div id="loveText"></div>
+
+<div class="giftSection" id="giftSection">
+<div class="giftIcon" onclick="openGift()">🌹</div>
+<div id="giftLink" style="display:none;">
+<a href="https://www.google.com/search?q=wisata+jogja" target="_blank">
+<button>Yuk Kita ke Jogja 🌹</button>
+</a>
+</div>
+</div>
+
+<button onclick="closeLove()">Tutup</button>
+</div>
+</div>
+
+<script>
+
+/* LOAD 100 BG */
+let wallpaper=document.getElementById("wallpaper");
+for(let i=1;i<=100;i++){
+let img=document.createElement("img");
+img.src="bg/"+i+".jpg";
+wallpaper.appendChild(img);
+}
+
+/* PARALLAX */
+document.addEventListener("mousemove",(e)=>{
+let x=(e.clientX/window.innerWidth-0.5)*15;
+let y=(e.clientY/window.innerHeight-0.5)*15;
+wallpaper.style.transform=`translate(${x}px,${y}px)`;
+});
+
+/* POPUP FOTO */
+function openPopup(src){
+document.getElementById("popupImg").src=src;
+document.getElementById("popup").style.display="flex";
+}
+
+/* CONFETTI */
+function confettiEffect(){
+for(let i=0;i<120;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"%";
+c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+c.style.animationDuration=(Math.random()*2+2)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+/* CINEMATIC MESSAGE */
+function showLove(){
+confettiEffect();
+document.getElementById("loveBox").style.display="flex";
+
+let messages=[
+"Hai dede yang selalu ada di hati mas ❤️",
+"Mas bersyukur banget dipertemukan sama dede...",
+"Dari sekian banyak orang di dunia ini...",
+"Mas milih dede, dan mas nggak pernah nyesel.",
+"Dede adalah alasan mas tersenyum setiap hari.",
+"Dede adalah tempat pulang paling nyaman.",
+"Terima kasih sudah sabar sama sifat mas.",
+"Ayo kita perbaiki hubungan kita yuk de.",
+"Mas mau tumbuh bareng dede.",
+"Mas mau bahagia bareng dede.",
+"Mas kangen dede, mas sayang dede, maafin semua kesalahan mas yah de.",
+"Dari Cerita random, cerita hal hal kecil, muter muter sambil cerita sana sini, mas kangen hal seperti itu.",
+"Dan nanti di aniversary kita di tanggal 4 april...",
+"Mas mau ajak dede jalan jalan bareng dede.",
+"Melihat tempat-tempat indah insyaallah...",
+"Mewujudkan wist list satu persatu, membuat kenangan yang nggak akan pernah kita lupa.",
+"Mas sayang banget sama dede ❤️",
+"Dan mas harap dede tetap di sini... sama mas."
+];
+
+let i=0;
+let textBox=document.getElementById("loveText");
+textBox.innerHTML="";
+document.getElementById("giftSection").style.display="none";
+
+function showNext(){
+if(i < messages.length){
+
+textBox.classList.remove("showText");
+
+setTimeout(()=>{
+textBox.innerHTML = messages[i];
+textBox.classList.add("showText");
+i++;
+},500);
+
+setTimeout(showNext,2500);
+
+}else{
+document.getElementById("giftSection").style.display="block";
+}
+}
+
+showNext();
+}
+
+function closeLove(){
+document.getElementById("loveBox").style.display="none";
+document.getElementById("giftSection").style.display="none";
+document.getElementById("giftLink").style.display="none";
+document.getElementById("loveText").innerHTML="";
+}
+
+function openGift(){
+document.getElementById("giftLink").style.display="block";
+}
+
+/* ================= PASSWORD SYSTEM ================= */
+
+let correctPassword = "04042024"; // GANTI dengan sandi kamu
+
+function checkPassword(){
+let input = document.getElementById("passwordInput").value;
+let music = document.getElementById("bgMusic");
+
+if(input === correctPassword){
+document.getElementById("passwordScreen").style.display="none";
+
+music.volume = 0.5; // atur volume
+music.play().then(()=>{
+console.log("Musik berhasil diputar");
+}).catch((err)=>{
+console.log("Autoplay gagal:", err);
+});
+
+}else{
+document.getElementById("errorText").innerText="Sandi salah, coba lagi ya ❤️";
+}
+}
+
+</script>
+
+</body>
+</html>
